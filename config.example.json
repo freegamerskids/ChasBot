@@ -1,0 +1,17 @@
+{
+  "token": "",
+  "CLIENT_ID": "",
+  "bot_ver": "1.0.0",
+  "prefix": "!",
+
+  "log_level": "debug",
+
+  "presence": {
+    "status": "online",
+    "activity": {
+      "name": "alone",
+      "type": 0,
+      "url": ""
+    }
+  }
+}
