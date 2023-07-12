@@ -1,6 +1,6 @@
 import {ChasBot} from "../typings/ChasBot";
 import console from "../util/logger"
-import {CommandInteraction, Interaction} from "discord.js";
+import {CommandInteraction, Interaction, Message} from "discord.js";
 import {readdirSync} from 'node:fs'
 
 function findSubCommand(options:[{type:number}]) {
@@ -29,8 +29,38 @@ export function init(c: ChasBot) {
         for (const file of cmdFiles){
             const cmd = require(`../cmds/${dir}/${file}`)
 
+            if (file.startsWith(`${dir}_index`)) {
+                //@ts-ignore
+                c.mainCmds[dir] = {
+                    name: cmd.default.name,
+                    description: cmd.default.description,
+                    options: cmd.default.options,
+                    run: cmd.default.run
+                }
+
+                continue
+            }
+
             // @ts-ignore
             if (!c.mainCmds[dir]) c.mainCmds[dir] = []
+
+            if (file.startsWith('[')) { // multiple commands in one file (ex. action commands)
+                let cmdConfig = require(`../cmds/${dir}/${
+                    file.replace('[','').replace(']','').split('.')[0]}Config.json`) // ex. [action].ts => actionConfig.json
+
+                for (let command in cmdConfig) {
+                    //@ts-ignore
+                    c.mainCmds[dir].push({
+                        name: command,
+                        description: (cmdConfig[command].description) ? cmdConfig[command].description : cmd.default.description,
+                        options: cmd.default.options,
+                        type: 1,
+                        run: cmd.default.run
+                    })
+                }
+
+                continue
+            }
 
             // @ts-ignore
             c.mainCmds[dir].push({
@@ -54,7 +84,7 @@ export function init(c: ChasBot) {
             name        : mainCmd,
             description : mainCmd,
             // @ts-ignore temporary
-            options     : getSubArrayWithoutFunction(c.mainCmds[mainCmd])
+            options     : (!c.mainCmds[mainCmd].hasOwnProperty('run')) ? getSubArrayWithoutFunction(c.mainCmds[mainCmd]) : c.mainCmds[mainCmd].options
         })
     }
 
@@ -76,5 +106,9 @@ export function init(c: ChasBot) {
             console.warn(err)
             i.reply({content:'Sorry, my head wasn\'t able to process that command. Please try again later.', ephemeral:true})
         }
+    })
+
+    c.on('messageCreate', async (msg:Message) => {
+
     })
 }

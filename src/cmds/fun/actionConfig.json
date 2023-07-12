@@ -1,0 +1,44 @@
+{
+  "hug": {
+    "description": "hug someone you like!",
+    "gifs": [
+      "https://tenor.com/view/he-made-me-so-proud-chikka-chika-anime-hug-gif-26076322.gif",
+      "https://tenor.com/view/goodnight-bed-love-cuddle-hug-gif-12887276.gif",
+      "https://tenor.com/view/anime-hug-anime-hugging-hugging-hug-anime-gif-26094868.gif",
+      "https://tenor.com/view/hugs-gif-25241864.gif",
+      "https://tenor.com/view/hug-gif-25588769.gif",
+      "https://tenor.com/view/anime-hug-sweet-love-gif-14246498.gif",
+      "https://tenor.com/view/engage-kiss-anime-hug-gif-26231405.gif"
+    ],
+    "prompt": "<@{u1}> hugged <@{u2}>!",
+    "embed_color": "#c2dfff"
+  },
+  "kiss": {
+    "description": "kiss someone you love!",
+    "gifs": [
+      "https://tenor.com/view/kiss-gif-26359509.gif",
+      "https://tenor.com/view/anime-chuunibyou-kiss-gif-25359242.gif",
+      "https://tenor.com/view/cute-kawai-kiss-anime-gif-16371489.gif",
+      "https://tenor.com/view/anime-kiss-gif-22635282.gif",
+      "https://tenor.com/view/anime-kiss-gif-24306555.gif"
+    ],
+    "prompt": "<@{u1}> just kissed <@{u2}>!",
+    "embed_color": "#ff0000"
+  },
+  "slap": {
+    "description": "slap someone you don't like!",
+    "gifs": [
+      "https://tenor.com/view/anime-hit-slap-ouch-angry-gif-16268549.gif"
+    ],
+    "prompt": "<@{u1}> slapped <@{u2}>!",
+    "embed_color": "#ff0000"
+  },
+  "fuck": {
+    "description": "...",
+    "gifs": [
+      "https://tenor.com/view/caught-fbi-loli-sit-here-gif-13195594.gif"
+    ],
+    "prompt": "<@{u1}> **WOAH WOAH THERE!**",
+    "embed_color": "#247cff"
+  }
+}
