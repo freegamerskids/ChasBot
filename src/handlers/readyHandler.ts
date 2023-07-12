@@ -1,6 +1,7 @@
 import {ChasBot} from "../typings/ChasBot";
 import console from '../util/logger'
 import {Uptime} from "../cmds/util/uptime";
+import {registerFont} from "canvas";
 
 const {presence} = require('../../config.json')
 
@@ -20,4 +21,6 @@ export function init(c: ChasBot){
 
         new Uptime()
     })
+
+    registerFont(__dirname+'/../../TakeCoffee.ttf',{family: 'take-coffee'})
 }

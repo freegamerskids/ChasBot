@@ -10,9 +10,12 @@
   "author": "freegamerskids",
   "license": "AGPL-3.0",
   "dependencies": {
+    "canvas": "^2.11.2",
     "discord.js": "^14.11.0",
     "node-abort-controller": "^3.1.1",
+    "node-json-db": "^2.2.0",
     "ts-node": "^10.9.1",
+    "undici": "^5.22.1",
     "winston": "^3.9.0"
   }
 }

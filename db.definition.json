@@ -1,0 +1,11 @@
+{
+  "guild_id": {
+    "background": "url",
+    "greeting_message": "message",
+    "goodbye_message": "message",
+    "channels": {
+      "welcome": "channel_id",
+      "goodbye": "channel_id"
+    }
+  }
+}

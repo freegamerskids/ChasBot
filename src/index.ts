@@ -1,6 +1,7 @@
 import {Client, REST, GatewayIntentBits, Collection} from "discord.js";
 import {readdirSync, lstatSync} from 'fs'
 import {AbortController} from 'node-abort-controller'
+import {JsonDB, Config} from "node-json-db";
 
 const {token} = require('../config.json')
 
@@ -14,9 +15,11 @@ class ChasBot extends Client {
     public restCmds = []
     public restClient = new REST({version: '10'}).setToken(token)
 
+    public GuildDB = new JsonDB(new Config('db.json',true,false,'/',true))
+
     constructor() {
         super({
-            intents: [GatewayIntentBits.Guilds]
+            intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers]
         });
 
         // @ts-ignore
