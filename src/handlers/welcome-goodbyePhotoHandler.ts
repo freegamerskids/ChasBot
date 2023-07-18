@@ -14,7 +14,7 @@ export function init(c: ChasBot){
         try { background_url = await c.GuildDB.getData(`/${member.guild.id}/background`) }
         catch (e) { background_url = default_background_url }
 
-        try { guild_greeting = await c.GuildDB.getData(`/${member.guild.id}/greeting_message`) }
+        try { guild_greeting = await c.GuildDB.getData(`/${member.guild.id}/messages/greeting`) }
         catch (e) { guild_greeting = `Welcome to ${member.guild.name}!` }
 
         try { welcome_channel = await c.GuildDB.getData(`/${member.guild.id}/channels/welcome`) }
@@ -36,10 +36,10 @@ export function init(c: ChasBot){
         try { background_url = await c.GuildDB.getData(`/${member.guild.id}/background`) }
         catch (e) { background_url = default_background_url }
 
-        try { guild_goodbye = await c.GuildDB.getData(`/${member.guild.id}/greeting_message`) }
-        catch (e) { guild_goodbye = `Welcome to ${member.guild.name}!` }
+        try { guild_goodbye = await c.GuildDB.getData(`/${member.guild.id}/messages/goodbye`) }
+        catch (e) { guild_goodbye = `Sad to see you go so soon ${member.displayName} :(` }
 
-        try { goodbye_channel = await c.GuildDB.getData(`/${member.guild.id}/channels/welcome`) }
+        try { goodbye_channel = await c.GuildDB.getData(`/${member.guild.id}/channels/goodbye`) }
         catch (e) { goodbye_channel = member.guild.systemChannelId as string }
 
         let attach = await createGreetingBanner(member as GuildMember,background_url,guild_goodbye)

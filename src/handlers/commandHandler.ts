@@ -1,7 +1,7 @@
 import {ChasBot} from "../typings/ChasBot";
 import console from "../util/logger"
 import {CommandInteraction, Interaction, Message} from "discord.js";
-import {readdirSync} from 'node:fs'
+import {readdirSync,lstatSync} from 'node:fs'
 
 function findSubCommand(options:[{type:number}]) {
     for (const option of options){
@@ -25,8 +25,40 @@ function getSubArrayWithoutFunction(options:[{name:string,description:string,opt
 
 export function init(c: ChasBot) {
     for (const dir of c.mainCmdDirectories){
-        const cmdFiles = readdirSync(__dirname+'/../cmds/'+dir).filter(file => file.endsWith('.ts'))
+        const cmdFiles = readdirSync(__dirname+'/../cmds/'+dir)
         for (const file of cmdFiles){
+            if (lstatSync(__dirname+`/../cmds/${dir}/${file}`).isDirectory()) {
+                const subCmdFiles = readdirSync(__dirname+`/../cmds/${dir}/${file}`)
+
+                // @ts-ignore
+                if (!c.mainCmds[dir]) c.mainCmds[dir] = []
+
+                // @ts-ignore
+                c.mainCmds[dir].push({
+                    name: file,
+                    description: file,
+                    options: [],
+                    type: 2
+                })
+
+                for (const sub of subCmdFiles) {
+                    const cmd = require(`../cmds/${dir}/${file}/${sub}`)
+
+                    // @ts-ignore
+                    c.mainCmds[dir][c.mainCmds[dir].length - 1].options.push({
+                        name: cmd.default.name,
+                        description: cmd.default.description,
+                        options: cmd.default.options,
+                        type: 1,
+                        run: cmd.default.run
+                    })
+                }
+
+                continue
+            }
+
+            if (!file.endsWith('.ts')) continue;
+
             const cmd = require(`../cmds/${dir}/${file}`)
 
             if (file.startsWith(`${dir}_index`)) {
@@ -104,11 +136,9 @@ export function init(c: ChasBot) {
                 : await (c.cmds.get(commandName))?.options.filter(o => o.name == options.getSubcommand())[0].run(i,options,c)
         } catch (err) {
             console.warn(err)
-            i.reply({content:'Sorry, my head wasn\'t able to process that command. Please try again later.', ephemeral:true})
+            i.replied
+                ? await i.editReply({content:'Sorry, my head wasn\'t able to process that command. Please try again later.'})
+                : await i.reply({content:'Sorry, my head wasn\'t able to process that command. Please try again later.', ephemeral:true})
         }
-    })
-
-    c.on('messageCreate', async (msg:Message) => {
-
     })
 }

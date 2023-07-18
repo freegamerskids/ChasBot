@@ -1,11 +1,14 @@
 {
   "guild_id": {
     "background": "url",
-    "greeting_message": "message",
-    "goodbye_message": "message",
+    "messages": {
+      "greeting": "message",
+      "goodbye": "message"
+    },
     "channels": {
       "welcome": "channel_id",
       "goodbye": "channel_id"
-    }
+    },
+    "admin_roles": []
   }
 }

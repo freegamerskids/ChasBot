@@ -12,8 +12,8 @@ function applyText(canvas:Canvas, text:string, fontSize = 70) {
 
     do {
         context.font = `${fontSize}px take-coffee`;
-        fontSize -= 10
-    } while (context.measureText(text).width > canvas.width - 300);
+        fontSize -= 2
+    } while (context.measureText(text).width > canvas.width - 150);
 
     return context.font;
 }
