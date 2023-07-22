@@ -2,6 +2,12 @@ import {ChasBot} from "../typings/ChasBot";
 import console from '../util/logger'
 import {Uptime} from "../cmds/util/uptime";
 import {registerFont} from "canvas";
+import {SetButtonListener} from "../cmds/util/msgBtn";
+import {SetModalListener} from "../cmds/util/modal";
+
+import dayjs from "dayjs";
+import utc from 'dayjs/plugin/utc'
+import tz from 'dayjs/plugin/timezone'
 
 const {presence} = require('../../config.json')
 
@@ -19,8 +25,15 @@ export function init(c: ChasBot){
             }]
         })
 
+        new SetModalListener(c)
+        new SetButtonListener(c)
         new Uptime()
     })
 
     registerFont(__dirname+'/../../TakeCoffee.ttf',{family: 'take-coffee'})
+
+    //@ts-ignore -- loading it here since its a long list
+    c.timezones = Intl.supportedValuesOf('timeZone')
+    dayjs.extend(utc)
+    dayjs.extend(tz)
 }

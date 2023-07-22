@@ -10,5 +10,8 @@
       "goodbye": "channel_id"
     },
     "admin_roles": []
+  },
+  "timezones": {
+    "user_id": "time/zone(/next)"
   }
 }

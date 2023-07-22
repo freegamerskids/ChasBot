@@ -6,12 +6,18 @@
   "scripts": {
     "start": "ts-node src/index.ts"
   },
-  "keywords": ["discord.js","discord","bot","discord-bot"],
+  "keywords": [
+    "discord.js",
+    "discord",
+    "bot",
+    "discord-bot"
+  ],
   "author": "freegamerskids",
   "license": "AGPL-3.0",
   "dependencies": {
     "bufferutil": "^4.0.7",
     "canvas": "^2.11.2",
+    "dayjs": "^1.11.9",
     "discord.js": "^14.11.0",
     "node-abort-controller": "^3.1.1",
     "node-json-db": "^2.2.0",

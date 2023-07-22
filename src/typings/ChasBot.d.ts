@@ -12,4 +12,6 @@ export interface ChasBot extends Client {
     restClient: REST
 
     GuildDB: JsonDB
+
+    timezones: string[]
 }

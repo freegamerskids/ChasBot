@@ -17,6 +17,8 @@ class ChasBot extends Client {
 
     public GuildDB = new JsonDB(new Config('db.json',true,false,'/',true))
 
+    public timezones: string[] = []
+
     constructor() {
         super({
             intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers]
