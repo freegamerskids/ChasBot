@@ -1,6 +1,6 @@
 import {ChasBot} from "../typings/ChasBot";
 import console from "../util/logger"
-import {CommandInteraction, Interaction, Message} from "discord.js";
+import {CommandInteraction, Interaction} from "discord.js";
 import {readdirSync,lstatSync} from 'node:fs'
 
 function findSubCommand(options:[{type:number}]) {
@@ -135,7 +135,7 @@ export function init(c: ChasBot) {
                 ? await (c.cmds.get(commandName))?.options.filter(o => o.name == options.getSubcommandGroup())[0].options.filter(o => o.name == options.getSubcommand())[0].run(i,options,c) //@ts-ignore
                 : await (c.cmds.get(commandName))?.options.filter(o => o.name == options.getSubcommand())[0].run(i,options,c)
         } catch (err) {
-            console.warn(err)
+            console.warn('[COMMAND]:',err)
             i.replied
                 ? await i.editReply({content:'Sorry, my head wasn\'t able to process that command. Please try again later.'})
                 : await i.reply({content:'Sorry, my head wasn\'t able to process that command. Please try again later.', ephemeral:true})

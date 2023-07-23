@@ -1,11 +1,10 @@
 import {CommandInteraction,CommandInteractionOptionResolver,EmbedBuilder} from "discord.js";
 import {ChasBot} from "../../typings/ChasBot";
-import console from '../../util/logger'
 import { request } from "undici";
 
 export default {
-    name: 'action', // the command name
-    description: 'action', // description example
+    name: 'action',
+    description: 'action',
     options:[
         {
             name: 'user',
@@ -17,17 +16,26 @@ export default {
     async run(i: CommandInteraction, options: CommandInteractionOptionResolver, c: ChasBot){
         const commands = require('./actionConfig.json')
         const commandName = options.getSubcommand()
-        const {gifs, prompt, embed_color} = commands[commandName.toLowerCase()]
+        let cmd
+        if (commands[commandName.toLowerCase()]){
+            cmd = commands[commandName.toLowerCase()]
+        } else {
+            try {
+                cmd = await c.GuildDB.getData(`/${i.guildId}/custom_commands/action/${commandName.toLowerCase()}`)
+            } catch (e) {
+                return await i.reply({content:'Action not found.', ephemeral:true})
+            }
+        }
 
         let user2 = options.getUser('user',true)
-        let gif = gifs[Math.floor(Math.random() * gifs.length)];
+        let gif = cmd.gifs[Math.floor(Math.random() * cmd.gifs.length)];
 
         let gif_req = await request(gif)
 
         let embed = new EmbedBuilder()
-            .setDescription(prompt.replace('{u1}', i.user.id).replace('{u2}', user2.id))
+            .setDescription(cmd.prompt.replace('{u1}', i.user.id).replace('{u2}', user2.id))
             .setImage(gif_req.headers['location'] as string)
-            .setColor(embed_color)
+            .setColor(cmd.embed_color)
 
         await i.reply({ embeds:[embed] })
     }

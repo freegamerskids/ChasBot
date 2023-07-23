@@ -7,12 +7,12 @@ const {CLIENT_ID} = require('../../config.json')
 export function init(c: ChasBot){
     (async () => {
         try {
-            c.restClient.put(
+            await c.restClient.put(
                 Routes.applicationCommands(CLIENT_ID),
                 {body: c.restCmds}
             )
         } catch (err) {
-            console.error(err)
+            console.error('[REST] [GLOBAL]:',err)
         }
     })();
 }

@@ -9,7 +9,17 @@
       "welcome": "channel_id",
       "goodbye": "channel_id"
     },
-    "admin_roles": []
+    "admin_roles": [],
+    "custom_commands": {
+      "action":{
+        "name": {
+          "description": "desc",
+          "gifs": ["link"],
+          "prompt": "<@{u1}> <@{u2}>",
+          "embed_color": "#000000"
+        }
+      }
+    }
   },
   "timezones": {
     "user_id": "time/zone(/next)"
