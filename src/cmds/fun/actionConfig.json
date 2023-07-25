@@ -8,7 +8,8 @@
       "https://tenor.com/view/hugs-gif-25241864.gif",
       "https://tenor.com/view/hug-gif-25588769.gif",
       "https://tenor.com/view/anime-hug-sweet-love-gif-14246498.gif",
-      "https://tenor.com/view/engage-kiss-anime-hug-gif-26231405.gif"
+      "https://tenor.com/view/engage-kiss-anime-hug-gif-26231405.gif",
+      "https://tenor.com/view/anime-anime-hug-anime-girls-hugging-love-you-luv-ya-gif-26150518.gif"
     ],
     "prompt": "<@{u1}> hugged <@{u2}>!",
     "embed_color": "#c2dfff"
@@ -20,7 +21,8 @@
       "https://tenor.com/view/anime-chuunibyou-kiss-gif-25359242.gif",
       "https://tenor.com/view/cute-kawai-kiss-anime-gif-16371489.gif",
       "https://tenor.com/view/anime-kiss-gif-22635282.gif",
-      "https://tenor.com/view/anime-kiss-gif-24306555.gif"
+      "https://tenor.com/view/anime-kiss-gif-24306555.gif",
+      "https://tenor.com/view/anime-kiss-gif-20779050.gif"
     ],
     "prompt": "<@{u1}> just kissed <@{u2}>!",
     "embed_color": "#ff0000"
@@ -28,7 +30,10 @@
   "slap": {
     "description": "slap someone you don't like!",
     "gifs": [
-      "https://tenor.com/view/anime-hit-slap-ouch-angry-gif-16268549.gif"
+      "https://tenor.com/view/anime-hit-slap-ouch-angry-gif-16268549.gif",
+      "https://tenor.com/view/anime-slap-mad-gif-16057834.gif",
+      "https://tenor.com/view/slap-gif-19391048.gif",
+      "https://tenor.com/view/slap-angry-mad-gif-15778548.gif"
     ],
     "prompt": "<@{u1}> slapped <@{u2}>!",
     "embed_color": "#ff0000"
