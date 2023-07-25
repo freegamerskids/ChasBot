@@ -19,7 +19,11 @@ export default {
                 {
                     name:'Goodbye channel',
                     value: 'goodbye'
-                }
+                },
+                {
+                    name:'Rankup channel',
+                    value:'rankup'
+                },
             ]
         },
         {

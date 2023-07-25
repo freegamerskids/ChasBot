@@ -14,4 +14,5 @@ export interface ChasBot extends Client {
     GuildDB: JsonDB
 
     timezones: string[]
+    rankCooldowns: {}
 }

@@ -7,7 +7,8 @@
     },
     "channels": {
       "welcome": "channel_id",
-      "goodbye": "channel_id"
+      "goodbye": "channel_id",
+      "rankup": "channel_id"
     },
     "admin_roles": [],
     "custom_commands": {
@@ -19,7 +20,18 @@
           "embed_color": "#000000"
         }
       }
-    }
+    },
+    "ranks": {
+      "user_id": {
+        "level": 0,
+        "xp": 0,
+        "xp_needed": 100
+      }
+    },
+    "rank_rewards": {
+      "level": "role_id"
+    },
+    "imported_ranks": "botname"
   },
   "timezones": {
     "user_id": "time/zone(/next)"
