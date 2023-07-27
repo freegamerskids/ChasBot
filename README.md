@@ -19,3 +19,15 @@ This bot comes with a start command:
 ```
 npm run start
 ```
+
+## Updating
+**IMPORTANT:** If you changed the action config or any other config in the `src` folder, make sure to make a backup before making this change.
+
+Download the `update.zip` in the [latest release](https://github.com/freegamerskids/ChasBot/releases/latest), unpack the zip file and replace files in your project folder with the new ones in the zip file.
+
+After that, type this in the command line:
+```
+npm i
+```
+
+And you're ready to start your bot!

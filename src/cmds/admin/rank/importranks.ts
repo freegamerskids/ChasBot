@@ -42,7 +42,7 @@ export default {
                 let json = await main_req.body.json()
                 let page_count = Math.ceil(json.total_count / json.count)
 
-                let full_list = []
+                let full_list: {level:number,exp:string,id:string}[] = []
                 full_list.push(...json.data)
 
                 for (let index = 2; index <= page_count; index++){
@@ -54,11 +54,12 @@ export default {
 
                 for (const rank of full_list){
                     let real_rank = rank.level
-                    while (Number(rank.exp) < xpNeedCalcFunction(real_rank-1)) { real_rank -= 1 }
+                    let num_exp = Number(rank.exp.replace(',',''))
+                    while (num_exp < xpNeedCalcFunction(real_rank-1)) { real_rank -= 1 }
 
                     const t = {
                         level: real_rank,
-                        xp: Number(rank.exp),
+                        xp: num_exp,
                         xp_needed: xpNeedCalcFunction(real_rank+1)
                     }
 
