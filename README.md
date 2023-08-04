@@ -1,6 +1,8 @@
 # ChasBot
 a general-purpose discord bot
 
+## TODO
+ - make button handler better (file based handling)
 
 ## Installing
 ***You need to have Node.js 16.9.0 or later to run this bot***
