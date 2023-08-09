@@ -18,7 +18,7 @@ export async function handleUser(c:ChasBot,guildId:string,memberId:string){
 
     if (user_rank.xp >= user_rank.xp_needed) {
         user_rank.level += 1
-        user_rank.xp_needed = f(user_rank.level)
+        user_rank.xp_needed = f(user_rank.level == 1 ? 2 : user_rank.level)
         rankedUp = true
     }
 
