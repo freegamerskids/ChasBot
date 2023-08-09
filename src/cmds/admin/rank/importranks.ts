@@ -27,7 +27,7 @@ export default {
 
         try {
             let imported_ranks_from = await c.GuildDB.getData(`/${i.guildId}/imported_ranks`)
-            return await i.editReply({content:`Ranks has already been imported from ${imported_ranks_from}`})
+            return await i.editReply({content:`Ranks have already been imported from ${imported_ranks_from}`})
         } catch (e) {}
 
         const bot = options.getString('bot',true).toLowerCase()
