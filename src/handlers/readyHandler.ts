@@ -2,8 +2,6 @@ import {ChasBot} from "../typings/ChasBot";
 import console from '../util/logger'
 import {Uptime} from "../cmds/util/uptime";
 import {registerFont} from "canvas";
-import {SetButtonListener} from "../cmds/util/msgBtn";
-import {SetModalListener} from "../cmds/util/modal";
 
 import dayjs from "dayjs";
 import utc from 'dayjs/plugin/utc'
@@ -25,8 +23,6 @@ export function init(c: ChasBot){
             }]
         })
 
-        new SetModalListener(c)
-        new SetButtonListener(c)
         new Uptime()
     })
 
