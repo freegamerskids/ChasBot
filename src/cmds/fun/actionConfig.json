@@ -12,7 +12,7 @@
       "https://tenor.com/view/anime-anime-hug-anime-girls-hugging-love-you-luv-ya-gif-26150518.gif"
     ],
     "prompt": "<@{u1}> hugged <@{u2}>!",
-    "embed_color": "#c2dfff"
+    "embedColor": "#c2dfff"
   },
   "kiss": {
     "description": "kiss someone you love!",
@@ -25,7 +25,7 @@
       "https://tenor.com/view/anime-kiss-gif-20779050.gif"
     ],
     "prompt": "<@{u1}> just kissed <@{u2}>!",
-    "embed_color": "#ff0000"
+    "embedColor": "#ff0000"
   },
   "slap": {
     "description": "slap someone you don't like!",
@@ -36,7 +36,7 @@
       "https://tenor.com/view/slap-angry-mad-gif-15778548.gif"
     ],
     "prompt": "<@{u1}> slapped <@{u2}>!",
-    "embed_color": "#ff0000"
+    "embedColor": "#ff0000"
   },
   "fuck": {
     "description": "...",
@@ -44,6 +44,6 @@
       "https://tenor.com/view/caught-fbi-loli-sit-here-gif-13195594.gif"
     ],
     "prompt": "<@{u1}> **WOAH WOAH THERE!**",
-    "embed_color": "#247cff"
+    "embedColor": "#247cff"
   }
 }

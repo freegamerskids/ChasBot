@@ -1,6 +1,6 @@
 {
   "name": "chasbot",
-  "version": "2.1.2",
+  "version": "2.3.0",
   "description": "an general-purpose discord bot",
   "main": "src/index.ts",
   "scripts": {
@@ -19,8 +19,8 @@
     "canvas": "^2.11.2",
     "dayjs": "^1.11.9",
     "discord.js": "^14.11.0",
+    "mongoose": "^7.4.3",
     "node-abort-controller": "^3.1.1",
-    "node-canvas": "^2.9.0",
     "node-json-db": "^2.2.0",
     "ts-node": "^10.9.1",
     "typescript": "^5.1.6",

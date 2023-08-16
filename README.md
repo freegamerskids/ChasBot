@@ -1,9 +1,6 @@
 # ChasBot
 a general-purpose discord bot
 
-## TODO
- - make button handler better (file based handling)
-
 ## Installing
 ***You need to have Node.js 16.9.0 or later to run this bot***
 
@@ -13,8 +10,8 @@ npm i
 ```
 
 ## Configuring and setting up
-1. Rename `db.example.json` to  `db.json`
-2. Rename `config.example.json` to `config.json` and set the variables as you like to
+1. Rename `config.example.json` to `config.json` and set the variables as you like to
+2. Install [MongoDB](https://www.mongodb.com/docs/manual/installation) and configure the `database` variables in your `config.json`
 
 ## Running
 This bot comes with a start command:

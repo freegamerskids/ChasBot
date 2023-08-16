@@ -2,6 +2,8 @@ import {CommandInteraction, CommandInteractionOptionResolver, GuildMember} from 
 import {ChasBot} from "../../../typings/ChasBot";
 import {hasAdminPermissions} from "../../util/hasAdmin";
 import {xpNeedCalcFunction} from "../../../util/rankHandler";
+import {IGuild, MGuild} from "../../../models/guild";
+import {HydratedDocument} from "mongoose";
 
 export default {
     name: 'setlevel',
@@ -26,7 +28,14 @@ export default {
         const user = options.getUser('user',true)
         const level = options.getInteger('level',true)
 
-        await c.GuildDB.push(`/${i.guildId}/ranks/${user.id}`,{level,xp: xpNeedCalcFunction(level), xp_needed: xpNeedCalcFunction(level+1)})
+        let guild:HydratedDocument<IGuild> = await MGuild.findByGuildId(i.guildId)
+
+        let rank = guild.ranks.find(r => r.userId == user.id)
+        rank.level = level
+        rank.xp = xpNeedCalcFunction(level)
+        rank.xpNeeded = xpNeedCalcFunction(level+1)
+
+        await guild.save()
 
         await i.reply({content:`Successfully changed the level for user <@${user.id}> to \`${level}\``})
     }

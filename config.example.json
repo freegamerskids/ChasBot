@@ -4,6 +4,14 @@
   "bot_ver": "1.0.0",
   "prefix": "!",
 
+  "database": {
+    "hostname": "localhost:27017",
+
+    "__comment__": "Only use these if your MongoDB has authentication enabled",
+    "username": "",
+    "password": ""
+  },
+
   "log_level": "debug",
 
   "presence": {

@@ -1,14 +1,12 @@
 import {ChasBot} from "../typings/ChasBot";
 import {reloadGuildCommands} from "../util/reloadGuildCommands";
+import {MGuild} from "../models/guild";
 
 export function init(c: ChasBot){
     (async () => {
-        let db = await c.GuildDB.getData('/')
-        for (const guild in db) {
-            if (!db[guild]['custom_commands']) continue;
-            if (guild == 'timezones') continue;
-
-            await reloadGuildCommands(c,guild)
+        for await (const guild of MGuild.where('customCommands')) {
+            //if (guild.customCommands.action.length <= 0) return
+            await reloadGuildCommands(c,guild.id)
         }
     })();
 }
