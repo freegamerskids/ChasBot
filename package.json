@@ -4,7 +4,8 @@
   "description": "an general-purpose discord bot",
   "main": "src/index.ts",
   "scripts": {
-    "start": "ts-node src/index.ts"
+    "start": "ts-node src/index.ts",
+    "db-migrate": "node scripts/migrate-mongodb.js"
   },
   "keywords": [
     "discord.js",

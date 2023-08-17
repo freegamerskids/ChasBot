@@ -38,3 +38,13 @@ npm i
 ```
 
 And you're ready to start your bot!
+
+## Migrating to MongoDB
+Since version 2.3.0, ChasBot uses [MongoDB](https://www.mongodb.com/) as the database for saving guild settings, timezones, etc.
+If you've been using ChasBot before 2.3.0 (2.1.2 or older), please [install MongoDB](https://www.mongodb.com/docs/manual/installation),
+configure the `database` variables in `config.json` and run this command:
+```
+npm run db-migrate
+```
+
+After that you'll be ready to go and start using ChasBot again!
