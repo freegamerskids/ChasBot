@@ -1,14 +1,14 @@
 import {CommandInteraction, CommandInteractionOptionResolver, EmbedBuilder} from "discord.js";
 import {ChasBot} from "../../typings/ChasBot";
+import {MGuild} from "../../models/guild";
 
 export default {
     name: 'leaderboard',
     description: 'Gets the rank leaderboard',
     options:[],
     async run(i: CommandInteraction, options: CommandInteractionOptionResolver, c: ChasBot){
-        let ranks
-        try { ranks = await c.GuildDB.getData(`/${i.guildId}/ranks`) }
-        catch (e) { return await i.reply({content:'Seems like this server is a ghost town.', ephemeral:true}) }
+        let {ranks} = await MGuild.findByGuildId(i.guildId).select('ranks')
+        if (!ranks) return await i.reply({content:'Seems like this server is a ghost town.', ephemeral:true})
 
         let embed = new EmbedBuilder({title: `${i.guild.name}`})
             .setAuthor({name:'Leaderboard'})
@@ -16,17 +16,17 @@ export default {
             .setThumbnail(i.guild.iconURL({ extension: 'png', size: 128 }))
 
         //@ts-ignore
-        const sortable: [string,{level:number,xp:number,xp_needed:number}][] = Object.entries(ranks).sort(([,a],[,b]) => (b as any).xp - (a as any).xp)
+        const sortable: {userId:string,level:number,xp:number,xpNeeded:number}[] = ranks.sort(([_,__,a,],[___,____,b,]) => b - a)
 
         for (let i = 0; i < 10; i++) {
             if (!sortable[i]) break;
-            let [userid,info] = sortable[i]
+            let {userId,level,xp,xpNeeded} = sortable[i]
 
             embed.addFields([{
                 name: ` `,
-                value: `**#${i+1} <@${userid}>**
-                    Level: \`${info.level}\`
-                    XP: \`${info.xp}/${info.xp_needed}\``
+                value: `**#${i+1} <@${userId}>**
+                    Level: \`${level}\`
+                    XP: \`${xp}/${xpNeeded}\``
             }])
         }
 

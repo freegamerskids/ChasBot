@@ -1,6 +1,8 @@
 import {CommandInteraction, CommandInteractionOptionResolver, GuildMember, ChannelType} from "discord.js";
 import {ChasBot} from "../../../typings/ChasBot";
 import {hasAdminPermissions} from "../../util/hasAdmin";
+import {HydratedDocument} from "mongoose";
+import {IGuild, MGuild} from "../../../models/guild";
 
 export default {
     name: 'channel',
@@ -38,7 +40,11 @@ export default {
 
         let channel_name = options.getString('channel_name')
         let channel = options.getChannel('channel',true,[ChannelType.GuildText])
-        await c.GuildDB.push(`/${i.guild?.id}/channels/${channel_name}`,channel.id)
+
+        let guild:HydratedDocument<IGuild> = await MGuild.findByGuildId(i.guildId)
+        guild.channels[channel_name] = channel.id
+
+        await guild.save()
 
         await i.reply({content:`Successfully changed the \`${channel_name}\` to <#${channel.id}>.`})
     }

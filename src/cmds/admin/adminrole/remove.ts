@@ -1,5 +1,7 @@
 import {CommandInteraction, CommandInteractionOptionResolver, GuildMember} from "discord.js";
 import {ChasBot} from "../../../typings/ChasBot";
+import {HydratedDocument} from "mongoose";
+import {IGuild, MGuild} from "../../../models/guild";
 
 export default {
     name: 'remove',
@@ -17,14 +19,16 @@ export default {
 
         const role = options.getRole('role',true)
 
-        let index: number
-        try { index = await c.GuildDB.getIndex(`/${i.guildId}/admin_roles`,role.id,"id") }
-        catch (e) { return await i.reply({content:'The role you specified is not an admin role.',ephemeral:true}) }
+        let guild:HydratedDocument<IGuild> = await MGuild.findByGuildId(i.guildId)
 
-        if (index < 0) return await i.reply({content:'There aren\'t any admin roles set.', ephemeral:true})
-        if ((await c.GuildDB.getData(`/${i.guildId}/admin_roles[${index}]`)).name != role.name) return await i.reply({content:'The role you specified is not an admin role.',ephemeral:true})
+        if (guild.adminRoles.length <= 0) return await i.reply({content:'There aren\'t any admin roles set.', ephemeral:true})
 
-        await c.GuildDB.delete(`/${i.guildId}/admin_roles[${index}]`)
+        let index = guild.adminRoles.findIndex(r => r == role.id)
+        if (index < 0) return await i.reply({content:'The role you specified is not an admin role.',ephemeral:true})
+
+        guild.adminRoles.splice(index,1)
+
+        await guild.save()
 
         await i.reply({content:`Successfully removed the role \`${role.name}\` as an admin role.`})
     }

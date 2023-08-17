@@ -5,6 +5,8 @@ import {
 } from "discord.js";
 import {ChasBot} from "../../typings/ChasBot";
 import dayjs from "dayjs";
+import {MGuild} from "../../models/guild";
+import {MTimezone} from "../../models/timezone";
 
 export default {
     name: 'get',
@@ -18,20 +20,15 @@ export default {
         }
     ],
     async run(i: CommandInteraction, options: CommandInteractionOptionResolver, c: ChasBot){
-        let timezone1: string
-        try { timezone1 = await c.GuildDB.getData(`/timezones/${i.user?.id}`) }
-        catch (err) { return await i.reply({content:'Please set your timezone before getting someone else\'s with /timezone set.',ephemeral:true}) }
+        let timezone1 = await MTimezone.findByUserId(i.user?.id)
 
         let user = options.getUser('user',false) || i.user
-
-        let timezone2: string
-        try { timezone2 = await c.GuildDB.getData(`/timezones/${user.id}`) }
-        catch (err) { return await i.reply({content:'We\'re sorry, but that user is not in our database. Ask them to set their timezone!',ephemeral:true}) }
+        let timezone2 = await MTimezone.findByUserId(user.id)
 
         //@ts-ignore
-        const t1 = dayjs.utc().tz(timezone1)
+        const t1 = dayjs.utc().tz(timezone1.timezone)
         //@ts-ignore
-        const t2 = dayjs.utc().tz(timezone2)
+        const t2 = dayjs.utc().tz(timezone2.timezone)
 
         const embed = new EmbedBuilder({title: timezone1 == timezone2 ? 'Your timezone' : `${user.username}'s timezone`})
             .addFields(timezone2 == timezone1 ? [] : [{

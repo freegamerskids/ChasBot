@@ -1,5 +1,6 @@
 import {CommandInteraction, CommandInteractionOptionResolver, EmbedBuilder} from "discord.js";
 import {ChasBot} from "../../typings/ChasBot";
+import {MGuild} from "../../models/guild";
 
 export default {
     name: 'get',
@@ -15,9 +16,8 @@ export default {
     async run(i: CommandInteraction, options: CommandInteractionOptionResolver, c: ChasBot){
         const user = options.getUser('user',false) || i.user
 
-        let user_rank
-        try { user_rank = await c.GuildDB.getData(`/${i.guildId}/ranks/${user.id}`) }
-        catch (e) { return await i.reply({content:'Cannot find the user.', ephemeral:true}) }
+        let user_rank = (await MGuild.findByGuildId(i.guildId).select('ranks')).ranks.find(r => r.userId == user.id)
+        if (!user_rank) return await i.reply({content:'Cannot find the user.', ephemeral:true})
 
         let embed = new EmbedBuilder({title: `${user == i.user ? 'Your' : `${user.username}'s`} info`})
             .setColor('Random')
@@ -25,7 +25,7 @@ export default {
             .addFields([{
                 name: 'Info',
                 value: `Level: \`${user_rank.level}\`
-                XP: \`${user_rank.xp}/${user_rank.xp_needed}\``
+                XP: \`${user_rank.xp}/${user_rank.xpNeeded}\``
             }])
 
         return await i.reply({embeds:[embed]})

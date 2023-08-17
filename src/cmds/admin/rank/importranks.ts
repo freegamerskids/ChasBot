@@ -2,6 +2,8 @@ import {CommandInteraction, CommandInteractionOptionResolver, GuildMember} from 
 import {ChasBot} from "../../../typings/ChasBot";
 import {xpNeedCalcFunction} from "../../../util/rankHandler";
 import {request} from "undici";
+import {IGuild, MGuild} from "../../../models/guild";
+import {HydratedDocument} from "mongoose";
 
 export default {
     name: 'importranks',
@@ -25,10 +27,9 @@ export default {
 
         await i.deferReply()
 
-        try {
-            let imported_ranks_from = await c.GuildDB.getData(`/${i.guildId}/imported_ranks`)
-            return await i.editReply({content:`Ranks have already been imported from ${imported_ranks_from}`})
-        } catch (e) {}
+        let guild:HydratedDocument<IGuild> = await MGuild.findByGuildId(i.guildId)
+
+        if (guild.importedRanks) return await i.editReply({content:`Ranks have already been imported from ${guild.importedRanks}`})
 
         const bot = options.getString('bot',true).toLowerCase()
 
@@ -57,20 +58,27 @@ export default {
                     let num_exp = Number(rank.exp.replace(',',''))
                     while (num_exp < xpNeedCalcFunction(real_rank-1)) { real_rank -= 1 }
 
-                    const t = {
-                        level: real_rank,
-                        xp: num_exp,
-                        xp_needed: xpNeedCalcFunction(real_rank+1)
+                    let r = guild.ranks.find(r => r.userId == rank.id)
+                    if (r) {
+                        r.level = real_rank
+                        r.xp = num_exp
+                        r.xpNeeded = xpNeedCalcFunction(real_rank+1)
+
+                        continue
                     }
 
-                    await c.GuildDB.push(`/${i.guildId}/ranks/${rank.id}`,t)
+                    guild.ranks.push({userId:rank.id,level:real_rank,xp:num_exp,xpNeeded:xpNeedCalcFunction(real_rank+1)})
                 }
 
-                await c.GuildDB.push(`/${i.guildId}/imported_ranks`,"AmariBot")
+                guild.importedRanks = 'AmariBot'
 
-                return await i.editReply({content:'Successfully imported ranks from AmariBot.'})
+                break
             default:
                 return await i.editReply({content:'Cannot get data from this bot.'})
         }
+
+        await guild.save()
+
+        return await i.editReply({content:`Successfully imported ranks from ${guild.importedRanks}.`})
     }
 }

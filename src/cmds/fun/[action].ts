@@ -1,6 +1,8 @@
 import {CommandInteraction,CommandInteractionOptionResolver,EmbedBuilder} from "discord.js";
 import {ChasBot} from "../../typings/ChasBot";
 import { request } from "undici";
+import {IGuild, MGuild} from "../../models/guild";
+import {HydratedDocument} from "mongoose";
 
 export default {
     name: 'action',
@@ -20,11 +22,9 @@ export default {
         if (commands[commandName.toLowerCase()]){
             cmd = commands[commandName.toLowerCase()]
         } else {
-            try {
-                cmd = await c.GuildDB.getData(`/${i.guildId}/custom_commands/action/${commandName.toLowerCase()}`)
-            } catch (e) {
+            cmd = (await MGuild.findByGuildId(i.guildId).select('customCommands') as HydratedDocument<IGuild>).customCommands.action.find(a => a.name == commandName.toLowerCase())
+            if (!cmd)
                 return await i.reply({content:'Action not found.', ephemeral:true})
-            }
         }
 
         let user2 = options.getUser('user',true)
@@ -35,7 +35,7 @@ export default {
         let embed = new EmbedBuilder()
             .setDescription(cmd.prompt.replace('{u1}', i.user.id).replace('{u2}', user2.id))
             .setImage(gif_req.headers['location'] as string)
-            .setColor(cmd.embed_color)
+            .setColor(cmd.embedColor)
 
         await i.reply({ embeds:[embed] })
     }

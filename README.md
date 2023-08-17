@@ -1,9 +1,6 @@
 # ChasBot
 a general-purpose discord bot
 
-## TODO
- - make button handler better (file based handling)
-
 ## Installing
 ***You need to have Node.js 16.9.0 or later to run this bot***
 
@@ -13,8 +10,8 @@ npm i
 ```
 
 ## Configuring and setting up
-1. Rename `db.example.json` to  `db.json`
-2. Rename `config.example.json` to `config.json` and set the variables as you like to
+1. Rename `config.example.json` to `config.json` and set the variables as you like to
+2. Install [MongoDB](https://www.mongodb.com/docs/manual/installation) and configure the `database` variables in your `config.json`
 
 ## Running
 This bot comes with a start command:
@@ -41,3 +38,13 @@ npm i
 ```
 
 And you're ready to start your bot!
+
+## Migrating to MongoDB
+Since version 2.3.0, ChasBot uses [MongoDB](https://www.mongodb.com/) as the database for saving guild settings, timezones, etc.
+If you've been using ChasBot before 2.3.0 (2.1.2 or older), please [install MongoDB](https://www.mongodb.com/docs/manual/installation),
+configure the `database` variables in `config.json` and run this command:
+```
+npm run db-migrate
+```
+
+After that you'll be ready to go and start using ChasBot again!

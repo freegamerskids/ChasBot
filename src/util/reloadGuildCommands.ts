@@ -1,22 +1,22 @@
 import {ChasBot} from "../typings/ChasBot";
 import {Routes} from "discord.js";
 import console from "./logger";
+import {MGuild} from "../models/guild";
 
 const {CLIENT_ID} = require('../../config.json')
 
 export async function reloadGuildCommands(c:ChasBot, guildId:string) {
-    let guild = await c.GuildDB.getData(`/${guildId}`)
+    let guild = await MGuild.findByGuildId(guildId)
 
     let cmds = []
     let fun_cmds = {name: 'fun',description:'fun',options:[]}
 
-    if (guild['custom_commands']['action']){
-        const actionCommands = guild['custom_commands']['action']
-        for (const action in actionCommands) {
-            const cmd = actionCommands[action]
+    if (guild['customCommands']['action']){
+        const actionCommands = guild['customCommands']['action']
+        for (const action of actionCommands) {
             fun_cmds.options.push({
-                name: action,
-                description: cmd.description,
+                name: action.name,
+                description: action.description,
                 options: c.mainCmds['fun'][0]['options'],
                 type: 1,
                 run: c.mainCmds['fun'][0]['run']

@@ -2,6 +2,7 @@ import {ChasBot} from "../typings/ChasBot";
 import console from "../util/logger"
 import {CommandInteraction, Interaction} from "discord.js";
 import {readdirSync,lstatSync} from 'node:fs'
+import {MGuild} from "../models/guild";
 
 function findSubCommand(options:[{type:number}]) {
     for (const option of options){
@@ -128,6 +129,11 @@ export function init(c: ChasBot) {
         const {commandName, options} = i
 
         if (!c.cmds.has(commandName)) return i.reply({content:`I... don't understand the command quite well...`,ephemeral:true});
+
+        if ((await MGuild.exists({id:i.guildId})) == null) {
+            const dbGuild = new MGuild({id:i.guildId,background:'',messages:{},channels:{},adminRoles:[],customCommands:{action:[]},ranks:[],rankRewards:[],importedRanks:''})
+            await dbGuild.save()
+        }
 
         try {
             //@ts-ignore

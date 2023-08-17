@@ -1,5 +1,7 @@
 import {CommandInteraction, CommandInteractionOptionResolver, GuildMember} from "discord.js";
 import {ChasBot} from "../../../typings/ChasBot";
+import {HydratedDocument} from "mongoose";
+import {IGuild, MGuild} from "../../../models/guild";
 
 export default {
     name: 'add',
@@ -17,7 +19,10 @@ export default {
 
         const role = options.getRole('role',true)
 
-        await c.GuildDB.push(`/${i.guildId}/admin_roles[]`,{id:role.id,name:role.name})
+        let guild:HydratedDocument<IGuild> = await MGuild.findByGuildId(i.guildId)
+        guild.adminRoles.push(role.id)
+
+        await guild.save()
 
         await i.reply({content:`Successfully made the role \`${role.name}\` an admin role.`})
     }

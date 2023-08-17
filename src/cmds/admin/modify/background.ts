@@ -2,6 +2,8 @@ import {CommandInteraction, CommandInteractionOptionResolver, GuildMember} from 
 import {ChasBot} from "../../../typings/ChasBot";
 import {hasAdminPermissions} from "../../util/hasAdmin";
 import {isUrl} from "../../util/urlUtil";
+import {HydratedDocument} from "mongoose";
+import {IGuild, MGuild} from "../../../models/guild";
 
 export default {
     name: 'background',
@@ -20,7 +22,10 @@ export default {
         let background_url = options.getString('url')
         if (!isUrl(background_url as string)) return await i.reply({content:'Not an valid URL. Please try again with an actual URL.', ephemeral: true})
 
-        await c.GuildDB.push(`/${i.guild?.id}/background`,background_url)
+        let guild:HydratedDocument<IGuild> = await MGuild.findByGuildId(i.guildId)
+        guild.background = background_url
+
+        await guild.save()
 
         await i.reply({content:'Successfully changed background URL.'})
     }
