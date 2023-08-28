@@ -3,10 +3,11 @@
     "module": "NodeNext",
     "target": "ESNext",
     "sourceMap": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "NodeNext",
   },
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "github_release"
   ]
 }

@@ -1,5 +1,5 @@
 import {Client,Collection,REST} from "discord.js";
-import {JsonDB} from "node-json-db";
+import {ClusterClient} from "discord-hybrid-sharding";
 
 export interface ChasBot extends Client {
     cmds: Collection<string, {name:string,description:string,options:[{}], run?:Function}>
@@ -11,7 +11,7 @@ export interface ChasBot extends Client {
     restCmds: [{}]
     restClient: REST
 
-    GuildDB: JsonDB
+    cluster: ClusterClient<this>
 
     timezones: string[]
     rankCooldowns: {}

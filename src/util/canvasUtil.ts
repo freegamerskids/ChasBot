@@ -1,7 +1,5 @@
 import {Canvas, createCanvas, Image, loadImage} from "canvas";
 import {AttachmentBuilder, GuildMember} from "discord.js";
-import {request} from "undici";
-import console from "./logger";
 
 function getImageResolution(image:Image) {
     return {x: image.width, y: image.height}
